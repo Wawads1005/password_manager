@@ -1,0 +1,4 @@
+const DEFAULT_PORT = 8080;
+const DEFAULT_HOST = "127.0.0.1";
+
+export { DEFAULT_PORT, DEFAULT_HOST };

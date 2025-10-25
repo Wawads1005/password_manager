@@ -1,9 +1,8 @@
 import e from "express";
 import http from "node:http";
+import { keys } from "@/lib/keys";
 
 const app = e();
-const port = 8080;
-const host = "127.0.0.1";
 
 app.use(e.json());
 
@@ -28,7 +27,7 @@ server.on("request", (req) => {
 });
 
 server.on("listening", () => {
-  console.log(`Server running http://${host}:${port}`);
+  console.log(`Server running http://${keys.host}:${keys.port}`);
 });
 
-server.listen({ port, host });
+server.listen({ port: keys.port, host: keys.host });
