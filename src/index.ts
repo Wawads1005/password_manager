@@ -1,6 +1,7 @@
 import e from "express";
 import http from "node:http";
 import { keys } from "@/lib/keys";
+import { appRouter } from "@/routes";
 
 const app = e();
 
@@ -11,6 +12,8 @@ app.use(e.urlencoded({ extended: false }));
 app.get("/", (_, res) => {
   res.status(200).json({ message: "Hello, World!" });
 });
+
+app.use("/", appRouter);
 
 const server = http.createServer(app);
 
