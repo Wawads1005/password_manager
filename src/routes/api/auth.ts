@@ -3,7 +3,7 @@ import z from "zod";
 import { prismaClient } from "@/lib/db";
 import { comparePassword, hashSaltPassword } from "@/lib/crypto";
 import { AccountProvider } from "@prisma/client";
-import { SignJWT } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 import { keys } from "@/lib/keys";
 import { TextEncoder } from "node:util";
 
@@ -16,6 +16,54 @@ const signUpInput = z.object({
   email: z.email(),
   name: z.string(),
   password: z.string(),
+});
+
+authRouter.get("/", async (req, res) => {
+  try {
+    const { headers } = req;
+    const { authorization } = headers;
+
+    if (!authorization) {
+      res.status(401).json({ message: "Missing authorization header" });
+      return;
+    }
+
+    const [scheme, credentials] = authorization.split(" ");
+
+    if (scheme !== "Bearer" || !credentials) {
+      res.status(401).json({ message: "Missing bearer token" });
+      return;
+    }
+
+    const { payload } = await jwtVerify(credentials, encodedSecret);
+    const { sub } = payload;
+
+    if (!sub) {
+      res.status(404).json({ message: "Missing user ID" });
+      return;
+    }
+
+    const foundUser = await prismaClient.user.findUnique({
+      where: { id: sub },
+    });
+
+    if (!foundUser) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json({ user: foundUser });
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+
+      console.error(message);
+    }
+
+    res
+      .status(500)
+      .json({ message: "Unexpected error occured upon signing up" });
+  }
 });
 
 authRouter.post("/sign-up", async (req, res) => {
