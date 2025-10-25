@@ -17,6 +17,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      jose:
+        specifier: ^6.1.0
+        version: 6.1.0
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -478,6 +481,9 @@ packages:
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
+
+  jose@6.1.0:
+    resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -1094,6 +1100,8 @@ snapshots:
   is-promise@4.0.0: {}
 
   jiti@2.6.1: {}
+
+  jose@6.1.0: {}
 
   math-intrinsics@1.1.0: {}
 

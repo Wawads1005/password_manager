@@ -3,5 +3,6 @@ declare namespace NodeJS {
     PORT?: string;
     HOST?: string;
     NODE_ENV: "production" | "development";
+    AUTH_SECRET: string;
   }
 }

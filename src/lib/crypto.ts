@@ -4,14 +4,14 @@ import {
   DEFAULT_HASH_SALT_SEPARATOR,
   DEFAULT_SALT_LENGTH,
 } from "@/constants/crypto";
-import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
+import Crypto from "node:crypto";
 
 async function generateSalt(
   length: number = DEFAULT_SALT_LENGTH,
   encoding: BufferEncoding = DEFAULT_BUFFER_ENCODING
 ) {
   const salt = await new Promise<string>((resolve, reject) => {
-    randomBytes(length, (error, buffer) => {
+    Crypto.randomBytes(length, (error, buffer) => {
       if (error || !buffer) {
         reject(error);
         return;
@@ -38,7 +38,7 @@ async function hashSaltPassword(
   }
 
   const saltedPassword = await new Promise<string>((resolve, reject) => {
-    scrypt(password, salt, length, (error, buffer) => {
+    Crypto.scrypt(password, salt, length, (error, buffer) => {
       if (error || !buffer) {
         reject(error);
         return;
@@ -88,7 +88,7 @@ async function comparePassword(
     return false;
   }
 
-  const matchedPassword = timingSafeEqual(bufferA, bufferB);
+  const matchedPassword = Crypto.timingSafeEqual(bufferA, bufferB);
 
   return matchedPassword;
 }
