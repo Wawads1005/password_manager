@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx --watch ./src/index.ts",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate"
   },
   "packageManager": "pnpm@10.19.0",
   "devDependencies": {

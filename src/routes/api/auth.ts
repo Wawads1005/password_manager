@@ -24,14 +24,14 @@ authRouter.get("/", async (req, res) => {
     const { authorization } = headers;
 
     if (!authorization) {
-      res.status(401).json({ message: "Missing authorization header" });
+      res.status(200).json({ user: null });
       return;
     }
 
     const [scheme, credentials] = authorization.split(" ");
 
     if (scheme !== "Bearer" || !credentials) {
-      res.status(401).json({ message: "Missing bearer token" });
+      res.status(200).json({ user: null });
       return;
     }
 
@@ -39,7 +39,7 @@ authRouter.get("/", async (req, res) => {
     const { sub } = payload;
 
     if (!sub) {
-      res.status(404).json({ message: "Missing user ID" });
+      res.status(200).json({ user: null });
       return;
     }
 
